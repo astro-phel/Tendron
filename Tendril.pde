@@ -11,11 +11,30 @@ class Tendril
    x, y  is the starting (x,y) coordinate
    */
   public Tendril(int len, double theta, int x, int y)
-  {
-    //your code here
+  public Tendril(int len, double theta, int x, int y){
+    myNumSegments = len;
+    myAngle = theta;
+    myX = x;
+    myY = y;
   }
-  public void show()
-  {
-    //your code here
+  public void show(){
+    int r = (int)(Math.random() * 200);
+    int g = (int)(Math.random() * 200);
+    int b = (int)(Math.random() * 100);
+    stroke(r, g, b);
+    int startX = myX;
+    int startY = myY;
+    int endX, endY;
+    for (int i = 0; i < myNumSegments; i++) {
+      myAngle += ((Math.random() * 2) - 1) * 0.2;
+      endX = (int)(startX + Math.cos(myAngle) * SEG_LENGTH);
+      endY = (int)(startY + Math.sin(myAngle) * SEG_LENGTH);
+      line(startX, startY, endX, endY);
+      startX = endX;
+      startY = endY;
+    }
+    if (myNumSegments >= 1){
+      new Cluster(myNumSegments / 3, startX, startY);
+    }
   }
 }
